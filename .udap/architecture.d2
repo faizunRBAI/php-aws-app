@@ -1,0 +1,10 @@
+# udap:meta cloud=aws region=us-east-1 target=ec2
+
+user: Internet User { shape: person; udap-type: generic.user }
+vpc: AWS VPC (us-east-1) {
+  alb: Load Balancer { shape: rectangle; udap-type: aws.alb }
+  ec2: EC2 Instance (PHP/Laravel) { shape: rectangle; udap-type: aws.ec2 }
+}
+
+user -> vpc.alb: HTTPS / 80
+vpc.alb -> vpc.ec2: proxy
