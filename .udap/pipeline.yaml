@@ -16,6 +16,8 @@ stages:
         run: |
           curl -sS https://getcomposer.org/installer | php
           sudo mv composer.phar /usr/local/bin/composer
+      - name: Prepare bootstrap cache directory
+        run: mkdir -p bootstrap/cache && chmod 777 bootstrap/cache
       - name: Disable Composer advisory block policy
         run: composer config --no-interaction -g policy.advisories.block false
       - name: Install dependencies
@@ -36,6 +38,8 @@ stages:
         run: |
           curl -sS https://getcomposer.org/installer | php
           sudo mv composer.phar /usr/local/bin/composer
+      - name: Prepare bootstrap cache directory
+        run: mkdir -p bootstrap/cache && chmod 777 bootstrap/cache
       - name: Disable Composer advisory block policy
         run: composer config --no-interaction -g policy.advisories.block false
       - name: Install dependencies
