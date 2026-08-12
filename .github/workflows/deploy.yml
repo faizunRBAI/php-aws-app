@@ -104,6 +104,8 @@ jobs:
     timeout-minutes: 20
     steps:
     - uses: actions/checkout@v4
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
     - name: Install Ansible
       run: pip install ansible-core
     - name: Write SSH key

@@ -91,6 +91,8 @@ stages:
       TF_VAR_project_name: ${{ secrets.PROJECT_NAME }}
       TF_VAR_ssh_public_key: ${{ secrets.SSH_PUBLIC_KEY }}
     steps:
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
       - name: Install Ansible
         run: pip install ansible-core
       - name: Write SSH key
