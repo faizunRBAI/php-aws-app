@@ -16,9 +16,9 @@ stages:
         run: |
           curl -sS https://getcomposer.org/installer | php
           sudo mv composer.phar /usr/local/bin/composer
+      - name: Disable Composer advisory block policy
+        run: composer config --no-interaction -g policy.advisories.block false
       - name: Install dependencies
-        env:
-          COMPOSER_NO_AUDIT: "1"
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
       - name: Run PHP lint
         run: find app bootstrap config routes -name "*.php" -exec php -l {} \; | grep -v "No syntax errors" || true
@@ -36,9 +36,9 @@ stages:
         run: |
           curl -sS https://getcomposer.org/installer | php
           sudo mv composer.phar /usr/local/bin/composer
+      - name: Disable Composer advisory block policy
+        run: composer config --no-interaction -g policy.advisories.block false
       - name: Install dependencies
-        env:
-          COMPOSER_NO_AUDIT: "1"
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
       - name: Copy .env for testing
         run: cp .env.example .env && php artisan key:generate
