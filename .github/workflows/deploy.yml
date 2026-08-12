@@ -23,6 +23,8 @@ jobs:
         '
     - name: Install dependencies
       run: composer install --no-interaction --prefer-dist --optimize-autoloader
+      env:
+        COMPOSER_NO_AUDIT: '1'
     - name: Run PHP lint
       run: find app bootstrap config routes -name "*.php" -exec php -l {} \; | grep
         -v "No syntax errors" || true
@@ -47,6 +49,8 @@ jobs:
         '
     - name: Install dependencies
       run: composer install --no-interaction --prefer-dist --optimize-autoloader
+      env:
+        COMPOSER_NO_AUDIT: '1'
     - name: Copy .env for testing
       run: cp .env.example .env && php artisan key:generate
     - name: Run tests
