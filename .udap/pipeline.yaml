@@ -22,8 +22,9 @@ stages:
         run: composer config --no-interaction -g policy.advisories.block false
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
-      - name: Run PHP lint
-        run: find app bootstrap config routes -name "*.php" -exec php -l {} \; | grep -v "No syntax errors" || true
+      - name: Run PHP syntax check
+        run: |
+          find public routes config bootstrap app -name "*.php" -exec php -l {} \; 2>&1 | grep -v "No syntax errors" || true
 
   - id: test
     kind: test
@@ -44,10 +45,8 @@ stages:
         run: composer config --no-interaction -g policy.advisories.block false
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
-      - name: Copy .env for testing
-        run: cp .env.example .env && php artisan key:generate
-      - name: Run tests
-        run: php artisan test --env=testing
+      - name: Run PHPUnit tests
+        run: ./vendor/bin/phpunit --testdox
 
   - id: provision
     kind: provision
